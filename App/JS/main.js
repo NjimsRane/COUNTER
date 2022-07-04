@@ -10,22 +10,27 @@ const value = document.querySelector("#value");
 btns.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     const counter = e.currentTarget.classList;
+
     if (counter.contains("increase")) {
       count++;
+      value.style.color = "darkgreen";
     } else if (counter.contains("decrease")) {
-      count--;
+      if (count > 0) {
+        count--;
+        value.style.color = "red";
+      } else {
+        count = 0;
+        value.style.color = "azure";
+      }
     } else if (counter.contains("reset")) {
       count = 0;
-    }
-
-    if (count < 0) {
-      value.style.color = "red";
-    } else if (count > 0) {
-      value.style.color = "darkgreen";
-    } else {
       value.style.color = "azure";
     }
 
-    value.innerText = count;
+    value.innerText = format(count);
   });
 });
+
+function format(counts) {
+  return counts < 10 ? `0${counts}` : `${counts}`;
+}
